@@ -50,12 +50,9 @@ class FileStorage:
         """
         Loads storage dictionary from file
         """
-
-        classes = {
-                    'BaseModel': BaseModel, 'User': User, 'Place': Place,
+        classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
                     'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review
-                  }
+                    'Review': Review}
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
@@ -71,10 +68,6 @@ class FileStorage:
         """
         if obj is not None:
             k = str(obj.__class__.__name__) + "." + str(obj.id)
-        if k in FileStorage.__objects:
-            FileStorage.__objects.pop(k)
-            self.save()
-
-    def close(self):
-        """Deserializes JSON file to Objects"""
-        self.reload()
+            if k in FileStorage.__objects:
+                FileStorage.__objects.pop(k)
+                self.save()
