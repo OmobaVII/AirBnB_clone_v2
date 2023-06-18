@@ -74,3 +74,7 @@ class FileStorage:
         if k in FileStorage.__objects:
             FileStorage.__objects.pop(k)
             self.save()
+
+    def close(self):
+        """Deserializes JSON file to Objects"""
+        self.reload()
