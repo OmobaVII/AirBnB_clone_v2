@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 '''
-This module defines a class to manage file storage 
+This module defines a class to manage file storage
 for hbnb clone
 '''
 import json
-import models
+
 
 
 class FileStorage:
@@ -51,8 +51,8 @@ class FileStorage:
         Loads storage dictionary from file
         '''
         classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                    'State': State, 'City': City, 'Amenity': Amenity,
-                    'Review': Review}
+                   'State': State, 'City': City, 'Amenity': Amenity,
+                   'Review': Review}
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
