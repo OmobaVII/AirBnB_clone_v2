@@ -4,6 +4,9 @@ import unittest
 from models.base_model import BaseModel
 from models import storage
 import os
+from models.engine.file_storage import FileStorage
+from models.state import State
+import json
 
 
 class test_fileStorage(unittest.TestCase):
@@ -21,7 +24,7 @@ class test_fileStorage(unittest.TestCase):
         """ Remove storage file at end of tests """
         try:
             os.remove('file.json')
-        except:
+        except FileNotFoundError:
             pass
 
     def test_obj_list_empty(self):
@@ -107,3 +110,15 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_delete(self):
+        """ test the delete method"""
+        fs = FileStorage()
+        new_state = State()
+        new_state.name = "Edo"
+        fs.new(new_state)
+        fs.save()
+        fs.delete(new_state)
+        with open("file.json") as myFile:
+            for k, v in json.load(myFile).items():
+                self.assertFalse(new_state.name in json.load(myFile))
