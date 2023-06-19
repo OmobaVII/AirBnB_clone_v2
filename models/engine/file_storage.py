@@ -4,7 +4,13 @@
     For hbnb clone
 '''
 import json
-import models
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class FileStorage:
@@ -39,7 +45,7 @@ class FileStorage:
 
     def save(self):
         '''
-            Saves storage dictionary to file
+        Saves storage dictionary to file
         '''
         with open(FileStorage.__file_path, 'w') as f:
             temp = {}
@@ -50,7 +56,7 @@ class FileStorage:
 
     def reload(self):
         '''
-            Loads storage dictionary from file
+        Loads storage dictionary from file
         '''
         classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
                    'State': State, 'City': City, 'Amenity': Amenity,
@@ -66,7 +72,7 @@ class FileStorage:
 
     def delete(self, obj=None):
         '''
-            Deletes obj from __objects if present
+        Deletes obj from __objects if present
         '''
         if obj is not None:
             k = str(obj.__class__.__name__) + "." + str(obj.id)
