@@ -41,7 +41,7 @@ class DBStorage:
                     objects = self.__session.query(v).all()
                     if len(objects) > 0:
                         for obj in objects:
-                            key = f"{obj.__class__.name}.{obj.id}"
+                            key = f"{obj.__class__.__name__}.{obj.id}"
                             db_dictionary[key] = obj
                     if hasattr(db_dictionary, "_sa_instance_state"):
                         del db_dictionary["_sa_instance_state"]
@@ -49,7 +49,7 @@ class DBStorage:
         else:
             objects = self.__session.query(classes[cls]).all()
             for obj in objects:
-                key = f"{obj.__class__.name}.{obj.id}"
+                key = f"{obj.__class__.__name__}.{obj.id}"
                 db_dictionary[key] = obj
             if hasattr(db_dictionary, "_sa_instance_state"):
                 del db_dictionary["_sa_instance_state"]
