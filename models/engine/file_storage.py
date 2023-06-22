@@ -79,5 +79,5 @@ class FileStorage:
         try:
             k = "{}.{}".format(type(obj).__name__, obj.id)
             del self.__objects[k]
-        except (AttributeError, KeyError):
+        except Exception as e:
             pass
