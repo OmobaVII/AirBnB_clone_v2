@@ -19,6 +19,9 @@ class FileStorage:
     '''
     __file_path = 'file.json'
     __objects = {}
+    classes = {"BaseModel": BaseModel, "User": User, "State": State,
+               "City": City, "Amenity": Amenity, "Place": Place,
+               "Review": Review}
 
     def all(self, cls=None):
         '''
@@ -47,26 +50,25 @@ class FileStorage:
         '''
         Saves storage dictionary to file
         '''
+        temp = {}
+        for key, val in self.__objects.items():
+            temp[key] = val.to_dict()
         with open(FileStorage.__file_path, 'w') as f:
-            temp = {}
-            temp.update(FileStorage.__objects)
-            for key, val in temp.items():
-                temp[key] = val.to_dict()
             json.dump(temp, f)
 
     def reload(self):
         '''
         Loads storage dictionary from file
         '''
-        classes = {'BaseModel': BaseModel, 'User': User, 'Place': Place,
-                   'State': State, 'City': City, 'Amenity': Amenity,
-                   'Review': Review}
         try:
-            temp = {}
-            with open(FileStorage.__file_path, 'r') as f:
-                temp = json.load(f)
-                for key, val in temp.items():
-                    self.all()[key] = classes[val['__class__']](**val)
+            with open(self.__file_path, "r") as myFile:
+                objects = json.load(myFile)
+                for key, value in objects.items():
+                    class_name = value.get("__class__")
+                    if class_name in self.classes:
+                        class_obj = self.classes[class_name]
+                        obj = class_obj(**value)
+                        self.__objects[key] = obj
         except FileNotFoundError:
             pass
 
@@ -79,7 +81,3 @@ class FileStorage:
             del self.__objects[k]
         except (AttributeError, KeyError):
             pass
-
-    def close(self):
-        """Call the reload method"""
-        self.reload()
