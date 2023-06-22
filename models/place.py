@@ -63,7 +63,7 @@ class Place(BaseModel, Base):
                     amenities_list.append(v)
             return amenities_list
 
-        @add.setter
+        @amenities.setter
         def amenities(self, amenity=None):
             """adds Amenity.id to amenity_ids"""
             if amenity != None:
