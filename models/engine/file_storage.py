@@ -76,6 +76,6 @@ class FileStorage:
         '''
         if obj == None:
             return
-        k = str(type(obj).__name__) + "." + str(obj.id)
-        del FileStorage.__objects[k]
-        del FileStorage.__objects[obj]
+        k = str(obj.__class__.__name__) + "." + str(obj.id)
+        FileStorage.__objects.pop(k, None)
+        self.save()
