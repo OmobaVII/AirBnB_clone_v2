@@ -75,7 +75,7 @@ class FileStorage:
         Deletes obj from __objects if present
         '''
         try:
-            k = str(obj.__class__.__name__) + "." + str(obj.id)
+            k = "{}.{}".format(type(obj).__name__, obj.id)
             del self.__objects[k]
         except (AttributeError, KeyError):
             pass
