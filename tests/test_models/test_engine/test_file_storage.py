@@ -7,8 +7,11 @@ import os
 from models.engine.file_storage import FileStorage
 from models.state import State
 import json
+from os import getenv
 
 
+@unittest.skipIf(getenv("HBNB_TYPE_STORAGE") == "db",
+                 "Wont test for DBStorage")
 class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
 
