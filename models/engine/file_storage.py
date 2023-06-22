@@ -74,7 +74,8 @@ class FileStorage:
         '''
         Deletes obj from __objects if present
         '''
-        if obj == None:
-            return
-        k = str(obj.__class__.__name__) + "." + str(obj.id)
-        self.save()
+        try:
+            k = str(obj.__class__.__name__) + "." + str(obj.id)
+            del self.__objects[k]
+        except (AttributeError, KeyError):
+            pass
