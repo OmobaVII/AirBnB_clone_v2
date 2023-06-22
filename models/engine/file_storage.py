@@ -74,7 +74,7 @@ class FileStorage:
         '''
         Deletes obj from __objects if present
         '''
-        if obj is None:
+        if not obj:
             return
-        k = str(obj.__class__.__name__) + "." + str(obj.id)
+        k = str(type(obj).__name__) + "." + str(obj.id)
         del FileStorage.__objects[k]
