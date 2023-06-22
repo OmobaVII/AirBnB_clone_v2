@@ -78,3 +78,5 @@ class FileStorage:
             k = str(obj.__class__.__name__) + "." + str(obj.id)
             FileStorage.__objects.pop(k, None)
             self.save()
+        if not obj:
+            return
