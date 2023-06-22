@@ -76,6 +76,5 @@ class FileStorage:
         '''
         if obj is not None:
             k = str(obj.__class__.__name__) + "." + str(obj.id)
-            if k in FileStorage.__objects:
-                FileStorage.__objects.pop(k, None)
-                self.save()
+            FileStorage.__objects.pop(k, None)
+            self.save()
