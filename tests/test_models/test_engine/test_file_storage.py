@@ -115,6 +115,7 @@ class test_fileStorage(unittest.TestCase):
         with open("file.json") as myFile:
             for k, v in json.load(myFile).items():
                 self.assertFalse(new_state.id == k.split("."[0]))
+
     def test_delete_none(self):
         """test the deleted method with None"""
         fs = FileStorage()
