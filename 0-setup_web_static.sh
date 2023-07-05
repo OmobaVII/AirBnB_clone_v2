@@ -19,5 +19,5 @@ sudo mkdir -p /data/web_static/shared
 sudo echo "Test for my nginx configuration" | sudo tee /data/web_static/releases/test/index.html
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -hR ubuntu:ubuntu /data/
-sudo sed -i '35a'\""$content" /etc/nginx/sites-available/default
+sudo sed -i '35a'\'"$content" /etc/nginx/sites-available/default
 sudo /etc/init.d/nginx restart
