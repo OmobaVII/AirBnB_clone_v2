@@ -10,7 +10,7 @@
 # Give ownership of the /data/ folder to the ubuntu user AND group
 # Update the Nginx configuration to serve the content of /data/web_static/current/ to hbnb_static
 
-content="\\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n"
+content="\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n"
 
 sudo apt-get -y update
 sudo apt-get -y install nginx
