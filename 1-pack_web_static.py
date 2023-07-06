@@ -10,8 +10,8 @@ from datetime import datetime
 
 def do_pack():
     """generates a .tgx archive from web_static"""
-    current_time = datetime.now().strftime("%Y%m%d%H%M%S")
     try:
+        current_time = datetime.now().strftime("%Y%m%d%H%M%S")
         local("mkdir -p versions")
         myFile = "versions/web_static_{}.tgz".format(current_time)
         local("tar -cvzf {} web_static".format(myFile))
