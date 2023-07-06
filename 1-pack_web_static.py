@@ -8,14 +8,15 @@ from fabric.api import local
 from time import strftime
 from os.path import isdir
 
+
 def do_pack():
-    """generates a .tgx archive from web_static"""
-    try:
-	current_time = strftime("%Y%m%d%H%M%S")
-	if isdir("versions") is False:
-        	local("mkdir versions")
-        myFile = "versions/web_static_{}.tgz".format(current_time)
-        local("tar -cvzf {} web_static/".format(myFile))
-        return myFile
-    except Exception as e:
-        return None
+	"""generates a .tgx archive from web_static"""
+	try:
+		current_time = strftime("%Y%M%d%H%M%S")
+		if isdir("versions") is False:
+        		local("mkdir versions")
+		myFile = "versions/web_static_{}.tgz".format(current_time)
+		local("tar -cvzf {} web_static/".format(myFile))
+		return myFile
+	except Exception as e:
+		return None
