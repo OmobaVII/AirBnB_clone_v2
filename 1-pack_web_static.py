@@ -6,7 +6,7 @@ using a function do_pack
 """
 from fabric.api import local
 from time import strftime
-
+from os.path import isdir
 
 def do_pack():
     """generates a .tgx archive from web_static"""
