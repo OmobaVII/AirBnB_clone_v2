@@ -13,7 +13,7 @@ def do_pack():
     """generates a .tgx archive from web_static"""
     try:
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-	if isdir("versions") is False:
+        if isdir("versions") is False:
             local("mkdir versions")
         myFile = "versions/web_static_{}.tgz".format(current_time)
         local("tar -cvzf {} web_static".format(myFile))
