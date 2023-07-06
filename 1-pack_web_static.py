@@ -14,7 +14,7 @@ def do_pack():
     try:
         local("mkdir -p versions")
         myFile = "versions/web_static_{}.tgz".format(current_time)
-        local("tar -cvzf {} web_static/".format(myFile))
+        local("tar -cvzf {} web_static".format(myFile))
         return myFile
     except Exception as e:
         return None
