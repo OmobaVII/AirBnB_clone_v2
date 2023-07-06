@@ -4,7 +4,7 @@ A Fabric Script that distributes an archive to
 my web servers
 """
 
-from fabric.api import run, put
+from fabric.api import run, put, env
 from os.path import exists
 
 
