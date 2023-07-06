@@ -23,7 +23,7 @@ def do_pack():
             if local("mkdir -p versions").failed:
                 return None
 
-        local("cd web_static && tar -cvzf ../{} . && cd -".format(path))
-        return path
-    except Exception as e:
+        if (local("cd web_static && tar -cvzf ../{} . && cd -".format(path))).succeeded:
+            return path
+
         return None
