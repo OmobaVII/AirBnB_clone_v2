@@ -12,17 +12,13 @@ from os.path import isdir
 
 def do_pack():
     """generates a .tgx archive from web_static"""
-    date = "{}{}{}{}".format(datetime.now().year, datetime.now().month,
-                             datetime.now().day, datetime.now().hour,
-                             datetime.now().minute, datetime.now().second)
-    myFile = "web_static_{}.tgz".format(date)
-
     try:
+        date = datetime.now()strftime("%Y%m%d%H%M%S")
         if not isdir("versions"):
             local("mkdir -p versions")
+        myFile = "web_static_{}.tgz".format(date)
         path = "versions/{}".format(myFile)
-        local("tar -cvzf {} web_static/".format(path))
-
+        local("tar -cvzf {} web_static".format(path))
         return path
     except Exception:
         return None
