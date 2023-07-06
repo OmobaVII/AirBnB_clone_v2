@@ -13,7 +13,7 @@ def do_pack():
     current_time = strftime("%Y%M%d%H%M%S")
     try:
         local("mkdir versions")
-        myFile = f"versions/web_static_{current_time}.tgz"
+        myFile = "versions/web_static_{}.tgz".format(current_time)
         local("tar -cvzf {} web_static/".format(myFile))
         return myFile
     except Exception as e:
