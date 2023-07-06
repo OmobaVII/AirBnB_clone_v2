@@ -8,6 +8,7 @@ using a function do_pack
 from fabric.api import local
 from datetime import datetime
 from os.path import isdir
+from os import stat
 
 
 def do_pack():
@@ -17,7 +18,10 @@ def do_pack():
         if not isdir("versions"):
             local("mkdir -p versions")
         path = "versions/web_static_{}.tgz".format(date)
+        print("Packing web_static to {}".format(path))
         local("tar -cvzf {} web_static".format(path))
-        return path
+        file_size = stat(path).st_size
+        print("web_static packed: {} -> {} Bytes".format(path, file_size))
     except Exception:
-        return None
+        path = None
+    return path
