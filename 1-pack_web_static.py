@@ -6,13 +6,15 @@ using a function do_pack
 """
 from fabric.api import local
 from datetime import datetime
+from os.path import isdir
 
 
 def do_pack():
     """generates a .tgx archive from web_static"""
     try:
         current_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        local("mkdir -p versions")
+	if isdir("versions") is False:
+            local("mkdir versions")
         myFile = "versions/web_static_{}.tgz".format(current_time)
         local("tar -cvzf {} web_static".format(myFile))
         return myFile
