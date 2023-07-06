@@ -10,9 +10,10 @@ from time import strftime
 
 def do_pack():
     """generates a .tgx archive from web_static"""
-    current_time = strftime("%Y%M%d%H%M%S")
     try:
-        local("mkdir -p versions")
+	current_time = strftime("%Y%m%d%H%M%S")
+	if isdir("versions") is False:
+        	local("mkdir versions")
         myFile = "versions/web_static_{}.tgz".format(current_time)
         local("tar -cvzf {} web_static/".format(myFile))
         return myFile
