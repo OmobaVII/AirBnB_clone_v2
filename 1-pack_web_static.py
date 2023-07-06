@@ -13,7 +13,7 @@ from os.path import isdir
 def do_pack():
     """generates a .tgx archive from web_static"""
     try:
-        date = datetime.now()strftime("%Y%m%d%H%M%S")
+        date = datetime.now().strftime("%Y%m%d%H%M%S")
         if not isdir("versions"):
             local("mkdir -p versions")
         myFile = "web_static_{}.tgz".format(date)
