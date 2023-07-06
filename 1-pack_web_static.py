@@ -16,13 +16,13 @@ def do_pack():
                              datetime.now().day, datetime.now().hour,
                              datetime.now().minute, datetime.now().second)
     myFile = "web_static_{}.tgz".format(date)
-    path = "versions/{}".format(myFile)
 
-    if not isdir("versions"):
-        if local("mkdir -p versions").failed:
-            return None
+    try:
+        if not isdir("versions"):
+            local("mkdir -p versions")
+        path = "versions/{}".format(myFile)
+        local("tar -cvzf {} web_static/".format(path))
 
-    if (local("cd web_static && tar -cvzf ../{} . && cd -".format(path))).succeeded:
         return path
-
-    return None
+    except Exception:
+        return None
