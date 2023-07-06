@@ -14,11 +14,14 @@ def do_pack():
     """generates a .tgx archive from web_static"""
     try:
         date = datetime.now().strftime("%Y%m%d%H%M%S")
-        if isdir("versions") is False:
-            local("mkdir versions")
-        myFile = "versions/web_static_{}.tgz".format(date)
-        local("tar -cvzf {} web_static".format(myFile))
-        local("chmod 664 {}".format(myFile))
-        return myFile
+	myFile = "web_static_{}.tgz".format(date)
+	path = "versions/{}".format(myFile)
+
+        if not isdir("versions"):
+            local("mkdir -p versions")
+
+        local("tar -cvzf {} web_static".format(path))
+
+        return path
     except Exception as e:
         return None
