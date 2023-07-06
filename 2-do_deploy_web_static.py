@@ -19,14 +19,15 @@ def do_deploy(archive_path):
         put(archive_path, "/tmp/")
         filename_ext = archive_path.split("/")[-1]
         filename = filename_ext.split(".")[0]
-        full_path = "/data/web_static/releases/{}".format(filename)
-        run("sudo mkdir -p {}".format(full_path))
-        run("sudo tar -xzf /tmp/{} -C {}/".format(filename_ext, full_path))
-        run("sudo rm /tmp/{}".format(filename_ext))
-        run("sudo mv {}/web_static/* {}/".format(full_path, full_path))
-        run("sudo rm -rf {}/web_static".format(full_path))
-        run("sudo rm -rf /data/web_static/current")
-        run("sudo ln -s {} /data/web_static/current".format(full_path))
+        path = "/data/web_static/releases/"
+        full_path = path + filename
+        run('mkdir -p {}/'.format(full_path))
+        run('tar -xzf /tmp/{} -C {}/'.format(filename_ext, full_path))
+        run('rm -rf /tmp/{}'.format(filename_ext))
+        run('mv {}/web_static/* {}/'.format(full_path, full_path))
+        run('rm -rf {}/web_static'.format(full_path))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}/ /data/web_static/current'.format(full_path))
         return True
-    except BaseException:
+    except Exception as e:
         return False
