@@ -15,9 +15,8 @@ date = datetime.now()
 
 def do_pack():
     """generates a .tgx archive from web_static"""
-    path = "versions/web_static_{}{}{}{}{}{}.tgz".format(
-            date.year, date.month, date.day, date.hour,
-            date.minute, date.second)
+    path = "versions/web_static_{}.tgz".format(
+            date.strftime("%Y%m%d%H%M%S"))
     local("mkdir -p versions")
     print("Packing web_static to {}".format(path))
     pack = local("tar -cvzf " + path + " ./web_static")
