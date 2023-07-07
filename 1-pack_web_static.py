@@ -5,7 +5,7 @@ from the contents of the web_static folder
 using a function do_pack
 """
 
-from fabric.api import local
+from fabric.api import local, run, sudo
 from datetime import datetime
 from os.path import isdir
 from os import stat
@@ -20,7 +20,7 @@ def do_pack():
             date.minute, date.second)
     local("mkdir -p versions")
     print("Packing web_static to {}".format(path))
-    pack = local("tar -cvzf {} ./web_static".format(path))
+    pack = local("tar -cvzf " + path + " ./web_static")
     file_size = stat(path).st_size
     print("web_static packed: {} -> {} Bytes".format(path, file_size))
     if pack.succeeded:
