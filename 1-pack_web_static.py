@@ -10,14 +10,15 @@ from datetime import datetime
 from os.path import isdir
 from os import stat
 
-date = datetime.now().strftime("%Y%m%d%H%M%S")
+date = datetime.now()
 
 
 def do_pack():
     """generates a .tgx archive from web_static"""
-    if not isdir("versions"):
-        local("mkdir -p versions")
-    path = "versions/web_static_{}.tgz".format(date)
+    path = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+            date.year, date.month, date.day, date.hour,
+            date.minute, date.second)
+    local("mkdir -p versions")
     print("Packing web_static to {}".format(path))
     pack = local("tar -cvzf {} ./web_static".format(path))
     file_size = stat(path).st_size
