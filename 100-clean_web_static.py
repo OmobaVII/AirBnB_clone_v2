@@ -9,18 +9,29 @@ import os
 env.hosts = ['18.235.234.111', '100.25.181.230']
 
 
+def clean_local(number=0):
+    """cleans the pack"""
+    lists = local('ls -1t versions', capture=True)
+    lists = lists.split('\n')
+    n = int(number)
+    if n in (0, 1):
+        n = 1
+    for f in lists[n:]:
+        local('rm versions/{}'.format(f))
+
+def clean_remote(number=0):
+    """cleans the data in webserver"""
+    lists = run('ls -1t /data/web_static/releases')
+    lists = lists.split('\r\n')
+    n = int(number)
+    if n in (0, 1):
+        n = 1
+    for f in lists[n:]:
+        if f is 'test':
+            continue
+        run('rm -rf /data/web_static/releases/{}'.format(f))
+
 def do_clean(number=0):
     """deletes older versions of data from web server"""
-    n = 1 if int(number) == 0 else int(number)
-    files = [f for f in os.listdir('./versions')]
-    files.sort(reverse=True)
-    for f in files[n:]:
-        local("rm -f versions/{}".format(f))
-    remote = "/data/web_static/releases/"
-    with cd(remote):
-        tgz = run(
-            "ls -tr | grep -E '^web_static_([0-9]{6,}){1}$'"
-        ).split()
-        tgz.sort(reverse=True)
-        for d in tgz[n:]:
-            run("rm -rf {}{}".format(remote, d))
+    clean_local(number)
+    clean_remote(number)
