@@ -30,7 +30,7 @@ def clean_remote(number=0):
     for f in lists[n:]:
         if f is 'test':
             continue
-        run('sudo rm -rf /data/web_static/releases/{}'.format(f))
+        run('rm -rf /data/web_static/releases/{}'.format(f))
 
 
 def do_clean(number=0):
