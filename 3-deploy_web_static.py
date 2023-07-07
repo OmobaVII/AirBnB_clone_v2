@@ -10,20 +10,21 @@ from os import stat
 env.hosts = ['18.235.234.111', '100.25.181.230']
 
 
+date = datetime.now()
+
 def do_pack():
     """generates a .tgx archive from web_static"""
-    try:
-        date = datetime.now().strftime("%Y%m%d%H%M%S")
-        if not isdir("versions"):
-            local("mkdir -p versions")
-        path = "versions/web_static_{}.tgz".format(date)
-        print("Packing web_static to {}".format(path))
-        local("tar -cvzf {} web_static".format(path))
-        file_size = stat(path).st_size
-        print("web_static packed: {} -> {} Bytes".format(path, file_size))
-    except Exception:
-        path = None
-    return path
+    path = "versions/web_static_{}{}{}{}{}{}.tgz".format(
+            date.year, date.month, date.day, date.hour,
+            date.minute, date.second)
+    local("mkdir -p versions")
+    print("Packing web_static to {}".format(path))
+    pack = local("tar -cvzf " + path + " ./web_static")
+    file_size = stat(path).st_size
+    print("web_static packed: {} -> {} Bytes".format(path, file_size))
+    if pack.succeeded:
+        return path
+    return None
 
 
 def do_deploy(archive_path):
@@ -55,4 +56,5 @@ def deploy():
     archive = do_pack()
     if archive is None:
         return False
-    return do_deploy(archive)
+    success = do_deploy(archive)
+    return success
