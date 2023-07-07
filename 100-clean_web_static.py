@@ -11,7 +11,7 @@ env.hosts = ['18.235.234.111', '100.25.181.230']
 
 def clean_local(number=0):
     """cleans the pack"""
-    lists = local('ls -1t versions', capture=True)
+    lists = local('ls -lt versions', capture=True)
     lists = lists.split('\n')
     n = int(number)
     if n in (0, 1):
@@ -22,7 +22,7 @@ def clean_local(number=0):
 
 def clean_remote(number=0):
     """cleans the data in webserver"""
-    lists = run('ls -1t /data/web_static/releases')
+    lists = run('ls -lt /data/web_static/releases')
     lists = lists.split('\r\n')
     n = int(number)
     if n in (0, 1):
