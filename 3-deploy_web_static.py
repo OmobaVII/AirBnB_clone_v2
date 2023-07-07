@@ -12,6 +12,7 @@ env.hosts = ['18.235.234.111', '100.25.181.230']
 
 date = datetime.now()
 
+
 def do_pack():
     """generates a .tgx archive from web_static"""
     path = "versions/web_static_{}.tgz".format(

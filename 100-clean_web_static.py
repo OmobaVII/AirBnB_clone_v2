@@ -19,6 +19,7 @@ def clean_local(number=0):
     for f in lists[n:]:
         local('rm versions/{}'.format(f))
 
+
 def clean_remote(number=0):
     """cleans the data in webserver"""
     lists = run('ls -1t /data/web_static/releases')
@@ -30,6 +31,7 @@ def clean_remote(number=0):
         if f is 'test':
             continue
         run('rm -rf /data/web_static/releases/{}'.format(f))
+
 
 def do_clean(number=0):
     """deletes older versions of data from web server"""
