@@ -3,7 +3,7 @@
 Cleans the older archive from
 webservers
 """
-from fabric.api import local, run, put, env, runs_once
+from fabric.api import local, run, put, env, cd
 import os
 
 env.hosts = ['18.235.234.111', '100.25.181.230']
