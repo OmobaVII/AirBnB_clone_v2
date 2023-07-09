@@ -23,12 +23,12 @@ def clean_local(number=0):
 def clean_remote(number=0):
     """cleans the data in webserver"""
     lists = run('ls -1t /data/web_static/releases')
-    lists = lists.split('\r\n')
+    lists = lists.splitlines()
     n = int(number)
     if n in (0, 1):
         n = 1
     for f in lists[n:]:
-        if f is 'test':
+        if f == 'test':
             continue
         run('rm -rf /data/web_static/releases/{}'.format(f))
 
