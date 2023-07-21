@@ -11,6 +11,11 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+import models
+
+classes = {"BaseModel": BaseModel, "User": User, "State": State,
+           "City": City, "Amenity": Amenity, "Place": Place,
+           "Review": Review}
 
 
 class FileStorage:
@@ -29,31 +34,32 @@ class FileStorage:
         '''
         fil_dict = {}
         if cls is None:
-            return FileStorage.__objects
+            return self.__objects
 
         if cls != "":
-            for k, v in FileStorage.__objects.items():
-                if isinstance(v, cls):
+            for k, v in self.__objects.items():
+                if cls == k.split(".")[0]:
                     fil_dict[k] = v
             return fil_dict
-
         else:
-            return FileStorage.__objects
+            return self.__objects
 
     def new(self, obj):
         '''
             Adds new object to storage dictionary
         '''
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        if obj is not None:
+            key = obj.__class__.__name__ + "." + obj.id
+            self.__objects[key] = obj
 
     def save(self):
         '''
         Saves storage dictionary to file
         '''
         temp = {}
-        for key, val in self.__objects.items():
-            temp[key] = val.to_dict()
-        with open(FileStorage.__file_path, 'w') as f:
+        for key in self.__objects:
+            temp[key] = self.__objects[key].to_dict()
+        with open(self.__file_path, 'w') as f:
             json.dump(temp, f)
 
     def reload(self):
@@ -61,14 +67,13 @@ class FileStorage:
         Loads storage dictionary from file
         '''
         try:
-            with open(self.__file_path, "r") as myFile:
-                objects = json.load(myFile)
-                for key, value in objects.items():
-                    class_name = value.get("__class__")
-                    if class_name in self.classes:
-                        class_obj = self.classes[class_name]
-                        obj = class_obj(**value)
-                        self.__objects[key] = obj
+            with open(self.__file_path, 'r') as myFile:
+                items = json.load(myFile)
+            for key in items:
+                for key, val in FileStorage.__objects.items():
+                    class_name = val["__class__"]
+                    class_name = classes[class_name]
+                    FileStorage.__objects[key] = class_name(**val)
         except FileNotFoundError:
             pass
 
@@ -81,3 +86,7 @@ class FileStorage:
             del self.__objects[k]
         except Exception as e:
             pass
+
+    def close(self):
+        """for deserializing the json file to objects"""
+        self.reload()

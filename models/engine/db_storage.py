@@ -35,24 +35,22 @@ class DBStorage:
                    "Place": Place, "State": State, "City": City,
                    "Amenity": Amenity, "Review": Review}
         db_dictionary = {}
-        if cls == "" or cls is None:
-            for k, v in classes.items():
-                if k != "BaseModel":
-                    objects = self.__session.query(v).all()
-                    if len(objects) > 0:
-                        for obj in objects:
-                            key = f"{obj.__class__.__name__}.{obj.id}"
-                            db_dictionary[key] = obj
-                    if hasattr(db_dictionary, "_sa_instance_state"):
-                        del db_dictionary["_sa_instance_state"]
-            return db_dictionary
-        else:
-            objects = self.__session.query(classes[cls]).all()
-            for obj in objects:
-                key = f"{obj.__class__.__name__}.{obj.id}"
-                db_dictionary[key] = obj
-            if hasattr(db_dictionary, "_sa_instance_state"):
-                del db_dictionary["_sa_instance_state"]
+        for clss in classes:
+            if cls is None or cls is classes[clss] or cls is clss:
+                objs = self.__session.query(classes[clss]).all()
+                for obj in objs:
+                    key = "{}.{}".format(obj.__class__.__name__, obj.id)
+                    db_dictionary[key] = obj
+                return db_dictionary
+            else:
+                for k, v in classes.items():
+                    if k != "BaseModel":
+                        objs = self.__session.query(v).all()
+                        if len(objs) > 0:
+                            for obj in objs:
+                                key = "{}.{}".format(obj.__class__.__name__,
+                                                     obj.id)
+                                db_dictionary[key] = obj
             return db_dictionary
 
     def new(self, obj):
