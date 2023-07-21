@@ -2,9 +2,9 @@
 """ City Module for HBNB project """
 from models.base_model import BaseModel, Base
 from os import getenv
-from sqlalchemy import Column, String, ForeignKey
-from sqlalchemy.orm import relationship, backref
-from models.place import Place
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+import models
 
 
 class City(BaseModel, Base):
