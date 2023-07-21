@@ -23,10 +23,9 @@ city_1_2.save()
 city_2_1 = City(state_id=state_2.id, name="Page")
 print("New city: {} in the state: {}".format(city_2_1, state_2))
 city_2_1.save()
-
 print("")
 print("___")
-all_states = storage.all(State)
+
 all_states = storage.all(State)
 for state_id, state in all_states.items():
     for city in state.cities:

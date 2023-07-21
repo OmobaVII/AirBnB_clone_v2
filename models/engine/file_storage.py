@@ -4,18 +4,8 @@
     For hbnb clone
 '''
 import json
-from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 import models
-
-classes = {"BaseModel": BaseModel, "User": User, "State": State,
-           "City": City, "Amenity": Amenity, "Place": Place,
-           "Review": Review}
+from models.state import State
 
 
 class FileStorage:
@@ -24,9 +14,6 @@ class FileStorage:
     '''
     __file_path = 'file.json'
     __objects = {}
-    classes = {"BaseModel": BaseModel, "User": User, "State": State,
-               "City": City, "Amenity": Amenity, "Place": Place,
-               "Review": Review}
 
     def all(self, cls=None):
         '''
@@ -37,9 +24,9 @@ class FileStorage:
             return self.__objects
 
         if cls != "":
-            for k, v in self.__objects.items():
-                if cls == k.split(".")[0]:
-                    fil_dict[k] = v
+            for key, val in self.__objects.items():
+                if type(val) == cls:
+                    fil_dict[key] = val
             return fil_dict
         else:
             return self.__objects
@@ -57,8 +44,8 @@ class FileStorage:
         Saves storage dictionary to file
         '''
         temp = {}
-        for key in self.__objects:
-            temp[key] = self.__objects[key].to_dict()
+        for key, val in self.__objects.items():
+            temp[key] = val.to_dict()
         with open(self.__file_path, 'w') as f:
             json.dump(temp, f)
 
@@ -68,12 +55,11 @@ class FileStorage:
         '''
         try:
             with open(self.__file_path, 'r') as myFile:
-                items = json.load(myFile)
-            for key in items:
-                for key, val in FileStorage.__objects.items():
-                    class_name = val["__class__"]
-                    class_name = classes[class_name]
-                    FileStorage.__objects[key] = class_name(**val)
+                FileStorage.__objects = json.load(myFile)
+            for key, val in FileStorage.__objects.items():
+                class_name = val["__class__"]
+                class_name = models.classes[class_name]
+                FileStorage.__objects[key] = class_name(**val)
         except FileNotFoundError:
             pass
 
@@ -84,6 +70,7 @@ class FileStorage:
         try:
             k = "{}.{}".format(type(obj).__name__, obj.id)
             del self.__objects[k]
+            self.save()
         except Exception as e:
             pass
 
