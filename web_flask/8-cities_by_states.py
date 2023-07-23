@@ -84,7 +84,7 @@ def states_list():
 def cities_list():
     """displays a HTML page with the list of cities and the states
     they fall under"""
-    sorted_states = storage.all(State).values()]
+    sorted_states = storage.all(State).values()
     return render_template('8-cities_by_states.html', states=sorted_states)
 
 
