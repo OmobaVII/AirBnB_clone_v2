@@ -10,6 +10,7 @@ Web app listens on 0.0.0.0 port 5000
 /number_odd_or_even/<n> page included
 """
 from models import storage
+from models.state import State
 from models import *
 from flask import Flask, render_template
 app = Flask(__name__)
@@ -83,7 +84,7 @@ def states_list():
 def cities_list():
     """displays a HTML page with the list of cities and the states
     they fall under"""
-    sorted_states = [s for s in storage.all("State").values()]
+    sorted_states = storage.all(State).values()]
     return render_template('8-cities_by_states.html', states=sorted_states)
 
 
