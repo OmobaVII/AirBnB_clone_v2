@@ -80,7 +80,7 @@ def states_list():
 
 
 @app.route('/cities_by_states')
-def cities_by_state():
+def cities_list():
     """displays a HTML page with the list of cities and the states
     they fall under"""
     sorted_states = [s for s in storage.all("State").values()]
