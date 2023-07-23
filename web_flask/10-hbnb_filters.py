@@ -98,5 +98,14 @@ def if_stateID_list(id):
     return render_template('9-states.html', states=sorted_states)
 
 
+@app.route('/hbnb_filters')
+def html_filters():
+    """display html page with active city/state filters"""
+    sorted_states = [s for s in storage.all("State").values()]
+    amenities = [a for a in storage.all("Amenity").values()]
+    return render_template('10-hbnb_filters.html', states=sorted_states,
+                           amenity=amenities)
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
