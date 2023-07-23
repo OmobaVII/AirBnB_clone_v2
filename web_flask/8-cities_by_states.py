@@ -6,7 +6,7 @@ web app listens on 0.0.0.0 port 5000
 """
 from models import *
 from models import storage
-from flask import Flask, render_tmeplate
+from flask import Flask, render_template
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
