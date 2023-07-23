@@ -65,7 +65,7 @@ def number_odd_or_even(n):
 
 
 @app.teardown_appcontext
-def teardown_db(exception):
+def teardown_db(self):
     """After each request, remove the current session"""
     storage.close()
 
